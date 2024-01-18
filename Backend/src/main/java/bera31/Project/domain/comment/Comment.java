@@ -34,20 +34,19 @@ public class Comment {
     @JoinColumn(name = "CONTENTS_ID")
     Contents post;
 
-    public Comment(CommentRequestDto commentRequestDto, Member member, Contents post) {
+    public Comment(CommentRequestDto commentRequestDto, Member member, Contents post, Comment parent) {
         this.user = member;
         this.timeStamp = LocalDateTime.now();
         this.content = commentRequestDto.getContent();
-        System.out.println("commentRequestDto.getContent() = " + commentRequestDto.getContent());
         this.post = post;
     }
 
-    public Comment(CommentRequestDto commentRequestDto, Member member, Comment parent) {
-        this.user = member;
-        this.timeStamp = LocalDateTime.now();
-        this.content = commentRequestDto.getContent();
-        this.post = parent.getPost();
-        this.parent = parent;
+    public static Comment commentWithoutParent(CommentRequestDto commentRequestDto, Member member, Contents post){
+        return new Comment(commentRequestDto, member, post, null);
+    }
+
+    public static Comment commentWithParent(CommentRequestDto commentRequestDto, Member member, Comment parent){
+        return new Comment(commentRequestDto, member, parent.getPost(), parent);
     }
 
     public void addChildComment(Comment comment) {

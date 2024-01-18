@@ -30,7 +30,7 @@ public class CommentService {
     public void saveSharingComment(CommentRequestDto commentRequestDto, Long contentsId) {
         Member currentMember = loadCurrentMember();
         Sharing currentSharing = sharingRepository.findById(contentsId);
-        Comment comment = new Comment(commentRequestDto, currentMember, currentSharing);
+        Comment comment = Comment.commentWithoutParent(commentRequestDto, currentMember, currentSharing);
         currentSharing.addComment(comment);
         commentRepository.save(comment);
     }
@@ -38,7 +38,7 @@ public class CommentService {
     public void saveGroupBuyingComment(CommentRequestDto commentRequestDto, Long contentsId) {
         Member currentMember = loadCurrentMember();
         GroupBuying currentGroupBuying = groupBuyingRepository.findById(contentsId);
-        Comment comment = new Comment(commentRequestDto, currentMember, currentGroupBuying);
+        Comment comment = Comment.commentWithoutParent(commentRequestDto, currentMember, currentGroupBuying);
         currentGroupBuying.addComment(comment);
         commentRepository.save(comment);
     }
@@ -46,7 +46,7 @@ public class CommentService {
     public void saveChildComment(CommentRequestDto commentRequestDto, Long commentId) {
         Member currentMember = loadCurrentMember();
         Comment parent = commentRepository.findCommentById(commentId);
-        Comment comment = new Comment(commentRequestDto, currentMember, parent);
+        Comment comment = Comment.commentWithParent(commentRequestDto, currentMember, parent);
         parent.addChildComment(comment);
         commentRepository.save(comment);
     }
