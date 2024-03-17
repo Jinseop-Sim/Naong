@@ -41,6 +41,13 @@ public class GroupBuyingRepository {
                 .getResultList();
     }
 
+    public List<GroupBuying> findAllWithCursor(int lastPage){
+        return em.createQuery("select g from GroupBuying g where g.id < :lastPage", GroupBuying.class)
+                .setParameter("lastPage", lastPage)
+                .setMaxResults(5)
+                .getResultList();
+    }
+
     public List<GroupBuying> findByKeyword(String keyword) {
         return em.createQuery("select g from GroupBuying g where g.title LIKE :keyword", GroupBuying.class)
                 .setParameter("keyword", "%" + keyword + "%")
