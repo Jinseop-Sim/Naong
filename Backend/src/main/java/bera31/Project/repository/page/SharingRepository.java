@@ -10,7 +10,6 @@ import java.util.List;
 @Repository
 @RequiredArgsConstructor
 public class SharingRepository {
-
     private final EntityManager em;
 
     public Sharing save(Sharing sharing) {

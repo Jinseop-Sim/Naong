@@ -36,7 +36,7 @@ public class SharingService {
     private final MemberRepository memberRepository;
     private final SharingRepository sharingRepository;
     private final LikeRepository likeRepository;
-    private final S3Uploader s3Uploader;
+    //private final S3Uploader s3Uploader;
 
     @Transactional(readOnly = true)
     public List<SharingListResponseDto> findAllSharing() {
@@ -77,7 +77,7 @@ public class SharingService {
         Member currentMember = loadCurrentMember();
 
         Sharing newSharing = new Sharing(sharingRequestDto, currentMember);
-        newSharing.setImage(s3Uploader.upload(postImage, "sharing"));
+        //newSharing.setImage(s3Uploader.upload(postImage, "sharing"));
 
         currentMember.postSharing(newSharing);
         sharingRepository.save(newSharing);

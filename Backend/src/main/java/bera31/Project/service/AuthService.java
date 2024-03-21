@@ -38,15 +38,15 @@ public class AuthService {
     private final S3Uploader s3Uploader;
     private static final long REFRESH_TOKEN_LIFETIME = 14 * 24 * 60 * 60 * 1000; // 14일
 
-    public Long signUp(SignUpDto signUpDto, MultipartFile profileImage) throws Exception {
+    public Long signUp(SignUpDto signUpDto) throws Exception {
         if (checkEmailDuplication(signUpDto))
             throw new EmailDuplicateException(ErrorResponse.EMAIL_DUPLICATE);
 
         Member member = new Member(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword()),
                 signUpDto.getNickname(), signUpDto.getDong(), signUpDto.getGu());
 
-        if (!profileImage.isEmpty())
-            member.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));
+        /*if (!profileImage.isEmpty())
+            member.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));*/
 
         return memberRepository.save(member).getId();
     }

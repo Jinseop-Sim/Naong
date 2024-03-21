@@ -1,7 +1,5 @@
 package bera31.Project.domain.dto.requestdto;
 
-import bera31.Project.domain.page.dutchpay.Category;
-import bera31.Project.domain.page.dutchpay.DutchPay;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

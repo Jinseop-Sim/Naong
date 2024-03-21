@@ -17,29 +17,25 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@DiscriminatorValue("D")
 public class DutchPay extends Contents {
-    String category;
     String store;
     int deliveryCost;
     int limitMember;
     LocalDateTime deadLine;
-    String content;
     String address;
     String detailAddress;
     @OneToMany(mappedBy = "dutchPay", cascade = CascadeType.ALL, orphanRemoval = true)
     List<DutchPayIntersection> memberList = new ArrayList<>();
 
     public DutchPay(DutchPayRequestDto dutchPayRequestDto, Member member) {
-        this.user = member;
-        this.category = dutchPayRequestDto.getCategory();
+        super(member, null, dutchPayRequestDto.getCategory(), dutchPayRequestDto.getContent());
         this.store = dutchPayRequestDto.getStore();
         this.deliveryCost = dutchPayRequestDto.getDeliveryCost();
         this.limitMember = dutchPayRequestDto.getLimitMember();
         this.address = dutchPayRequestDto.getAddress();
         this.detailAddress = dutchPayRequestDto.getDetailAddress();
         this.deadLine = dutchPayRequestDto.getDeadLine();
-        this.content = dutchPayRequestDto.getContent();
-        this.postTime = LocalDateTime.now();
     }
 
     public void addParticipantMember(DutchPayIntersection dutchPayIntersection) {

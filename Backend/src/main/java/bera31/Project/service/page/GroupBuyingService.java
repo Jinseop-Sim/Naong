@@ -8,6 +8,7 @@ import bera31.Project.domain.dto.responsedto.CommentResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.member.Member;
+import bera31.Project.domain.page.Contents;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
 import bera31.Project.domain.page.intersection.LikedGroupBuying;
@@ -17,6 +18,7 @@ import bera31.Project.repository.LikeRepository;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
 import bera31.Project.repository.page.IntersectionRepository;
+import bera31.Project.repository.page.PostRepository;
 import bera31.Project.service.CommentService;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
@@ -37,22 +39,16 @@ import java.util.stream.Collectors;
 @Transactional
 @RequiredArgsConstructor
 public class GroupBuyingService {
-    private final S3Uploader s3Uploader;
+    //private final S3Uploader s3Uploader;
     private final GroupBuyingRepository groupBuyingRepository;
     private final MemberRepository memberRepository;
     private final IntersectionRepository intersectionRepository;
     private final LikeRepository likeRepository;
-
-/*    public List<GroupBuyingListResponseDto> searchGroupBuying(String keyword) {
-        return groupBuyingRepository.findByKeyword(keyword)
-                .stream()
-                .map(GroupBuyingListResponseDto::new)
-                .collect(Collectors.toList());
-    }*/
+    private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
     public List<GroupBuyingListResponseDto> findAllGroupBuying() {
-        List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAll();
+        List<GroupBuying> findedGroupBuyings = postRepository.findAll();
 
         if(!findedGroupBuyings.isEmpty()) {
             checkExpiredPost(findedGroupBuyings);
@@ -88,11 +84,11 @@ public class GroupBuyingService {
         return new GroupBuyingResponseDto(groupBuyingRepository.findById(postId), commentResponseDtoList, checkMine);
     }
 
-    public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage) throws IOException {
+    public Long postGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto) throws IOException {
         Member currentMember = loadCurrentMember();
 
         GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, currentMember);
-        newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
+        //newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
         currentMember.postGroupBuying(newGroupBuying);
 
         return groupBuyingRepository.save(newGroupBuying);
@@ -100,9 +96,9 @@ public class GroupBuyingService {
 
     public Long updateGroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, MultipartFile postImage, Long postId) throws IOException {
         GroupBuying findedPost = groupBuyingRepository.findById(postId);
-        s3Uploader.deleteRemoteFile(findedPost.getImage().substring(52));
+        //s3Uploader.deleteRemoteFile(findedPost.getImage().substring(52));
 
-        return findedPost.update(groupBuyingRequestDto, s3Uploader.upload(postImage, "groupBuying"));
+        return findedPost.update(groupBuyingRequestDto);
     }
 
     public void deleteGroupBuying(Long postId) {

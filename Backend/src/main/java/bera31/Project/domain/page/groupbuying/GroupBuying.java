@@ -18,12 +18,11 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@DiscriminatorValue("G")
 public class GroupBuying extends Contents {
     String link;
-    String category;
     String product;
     LocalDateTime deadLine;
-    String content;
     int cost;
     String image;
     int limitMember;
@@ -43,12 +42,10 @@ public class GroupBuying extends Contents {
     public void addMember(GroupBuyingIntersection groupBuyingIntersection) {
         memberList.add(groupBuyingIntersection);
     }
-
     public void expirePost() {
         this.isFinish = true;
     }
-
-    public Long update(GroupBuyingRequestDto groupBuyingRequestDto, String image) {
+    public Long update(GroupBuyingRequestDto groupBuyingRequestDto) {
         this.cost = groupBuyingRequestDto.getPrice();
         this.limitMember = groupBuyingRequestDto.getMemberLimit();
         this.content = groupBuyingRequestDto.getContent();
@@ -58,22 +55,17 @@ public class GroupBuying extends Contents {
         this.title = groupBuyingRequestDto.getTitle();
         this.gu = groupBuyingRequestDto.getGu();
         this.dong = groupBuyingRequestDto.getDong();
-        this.image = image;
         return this.getId();
     }
 
     public GroupBuying(GroupBuyingRequestDto groupBuyingRequestDto, Member member) {
-        this.user = member;
+        super(member, groupBuyingRequestDto.getTitle(), groupBuyingRequestDto.getContent(), groupBuyingRequestDto.getCategory());
         this.cost = groupBuyingRequestDto.getPrice();
         this.limitMember = groupBuyingRequestDto.getMemberLimit();
-        this.content = groupBuyingRequestDto.getContent();
         this.isFinish = false;
-        this.category = groupBuyingRequestDto.getCategory();
         this.product = groupBuyingRequestDto.getProduct();
         this.deadLine = groupBuyingRequestDto.getDeadLine();
-        this.postTime = LocalDateTime.now();
         this.link = groupBuyingRequestDto.getLink();
-        this.title = groupBuyingRequestDto.getTitle();
         this.gu = groupBuyingRequestDto.getGu();
         this.dong = groupBuyingRequestDto.getDong();
     }

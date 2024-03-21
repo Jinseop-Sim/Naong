@@ -17,21 +17,23 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Getter
-@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+@DiscriminatorColumn(name = "DTYPE")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 public abstract class Contents {
     @Id
     @GeneratedValue
     @Column(name = "CONTENTS_ID")
-    Long id;
+    protected Long id;
 
     protected String title;
-
+    protected String category;
+    protected String content;
     @ManyToOne
     @JoinColumn(name = "MEMBER_ID")
     protected Member user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
-    List<Comment> comments = new ArrayList<>();
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
+    protected List<Comment> comments = new ArrayList<>();
 
     protected LocalDateTime postTime;
 
@@ -39,4 +41,11 @@ public abstract class Contents {
         comments.add(comment);
     }
 
+    public Contents(Member user, String title, String category, String content){
+        this.user = user;
+        this.title = title;
+        this.category = category;
+        this.content = content;
+        this.postTime = LocalDateTime.now();
+    }
 }

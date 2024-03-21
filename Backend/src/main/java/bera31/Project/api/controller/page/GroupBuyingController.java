@@ -49,9 +49,8 @@ public class GroupBuyingController {
             description = "사진은 필수 값입니다.\n\n" +
                     "form-data/multipart 형식으로 보내주시면 됩니다.")
     @PostMapping
-    public ResponseEntity<Long> postGroupBuying(@RequestPart GroupBuyingRequestDto groupBuyingRequestDto,
-                                                @RequestPart MultipartFile postImage) throws IOException {
-        return new ResponseEntity<>(groupBuyingService.postGroupBuying(groupBuyingRequestDto, postImage), HttpStatus.OK);
+    public ResponseEntity<Long> postGroupBuying(@RequestBody GroupBuyingRequestDto groupBuyingRequestDto) throws IOException {
+        return new ResponseEntity<>(groupBuyingService.postGroupBuying(groupBuyingRequestDto), HttpStatus.OK);
     }
 
     @Operation(summary = "공동구매 글 수정 API 입니다.",

@@ -1,13 +1,12 @@
 package bera31.Project.service;
 
-import bera31.Project.domain.TestBoard;
 import bera31.Project.domain.dto.responsedto.TestBoardDto;
 import bera31.Project.repository.TestBoardRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,9 +15,9 @@ import java.util.stream.Collectors;
 public class TestBoardService {
     private final TestBoardRepository testBoardRepository;
 
-    public List<TestBoardDto> findByCursorPaging(int cursor){
-        return testBoardRepository.findByCursorPaging(cursor)
-                .stream().map(TestBoardDto::new)
-                .collect(Collectors.toList());
+    @Transactional(readOnly = true)
+    public List<TestBoardDto> findByCursorPaging(Pageable pageable){
+        return testBoardRepository.findAllByOrderByIdDesc(pageable).stream()
+                .map(TestBoardDto::new).collect(Collectors.toList());
     }
 }

@@ -19,14 +19,13 @@ import java.util.List;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@DiscriminatorValue("S")
 public class Sharing extends Contents {
-    String category;
     String product;
     LocalDateTime expiry;
     LocalDateTime deadLine;
     boolean isFinish;
     String image;
-    String content;
     String gu;
     String dong;
 
@@ -34,16 +33,12 @@ public class Sharing extends Contents {
     List<LikedSharing> likedMemberList = new ArrayList<>();
 
     public Sharing(SharingRequestDto sharingRequestDto, Member member) {
-        this.user = member;
-        this.title = sharingRequestDto.getTitle();
-        this.category = sharingRequestDto.getCategory();
+        super(member, sharingRequestDto.getTitle(), sharingRequestDto.getCategory(), sharingRequestDto.getContent());
         this.product = sharingRequestDto.getProduct();
         this.expiry = sharingRequestDto.getExpiry();
         this.deadLine = sharingRequestDto.getDeadLine();
-        this.postTime = LocalDateTime.now();
         this.gu = sharingRequestDto.getGu();
         this.dong = sharingRequestDto.getDong();
-        this.content = sharingRequestDto.getContent();
         this.isFinish = false;
     }
 

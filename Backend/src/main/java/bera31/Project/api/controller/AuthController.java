@@ -21,9 +21,8 @@ public class AuthController {
     @Operation(summary = "회원가입 요청 API입니다.",
             description = "Multipart 형식으로 사진과 signUpDto를 넘겨주시면 됩니다.")
     @PostMapping("/signup")
-    public ResponseEntity<Long> signUp(@RequestPart SignUpDto signUpDto,
-                                       @RequestPart MultipartFile profileImage) throws Exception {
-        return new ResponseEntity<>(authService.signUp(signUpDto, profileImage), HttpStatus.OK);
+    public ResponseEntity<Long> signUp(@RequestPart SignUpDto signUpDto) throws Exception {
+        return new ResponseEntity<>(authService.signUp(signUpDto), HttpStatus.OK);
     }
 
     @Operation(summary = "닉네임 중복 확인 요청 API 입니다.",
