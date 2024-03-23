@@ -7,6 +7,7 @@
   <a href = "http://3.36.144.128:8080/naong-api">
    <img src="https://img.shields.io/badge/Naong!-FF9E0F?style=flat&logo=ASKfm&logoColor=white&link=https://www.instagram.com/_35yed">
    </a>
+  </br>
   <img src = "https://github.com/Jinseop-Sim/Naong/assets/71700079/aa6c47cd-284a-434d-9d1e-aded7434fb76">
 </div>  
 </br>
