@@ -1,6 +1,8 @@
 # <p align="center"> Project Naong! : Backend Repository</p>
 
-<image src="https://github.com/Jinseop-Sim/Naong/assets/71700079/aa6c47cd-284a-434d-9d1e-aded7434fb76" align="center"></image>
+<div align = "center>
+  <img src="https://github.com/Jinseop-Sim/Naong/assets/71700079/aa6c47cd-284a-434d-9d1e-aded7434fb76"></img>
+</div>
 
 <div align ="center">
   <a href = "https://github.com/Jun2-Lee/Toy_project">
