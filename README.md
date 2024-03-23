@@ -1,10 +1,5 @@
 # <p align="center"> Project Naong! : Backend Repository</p>
 
-<div align = "center>  
-  <img src="https://github.com/Jinseop-Sim/Naong/assets/71700079/aa6c47cd-284a-434d-9d1e-aded7434fb76">
-</div>
-</br>
-
 <div align ="center">
   <a href = "https://github.com/Jun2-Lee/Toy_project">
    <img src="https://img.shields.io/badge/GitRepo-181717?style=flat&logo=GitHub&logoColor=white&link=https://jinseop-sim.github.io/">
