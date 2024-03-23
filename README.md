@@ -1,4 +1,4 @@
-# <p align="center"> Project Naong! </p>
+# <p align="center"> Project Naong! : Backend Repository</p>
 
 <p align="center"> [대문 사진 자리] </p>
 
@@ -37,10 +37,22 @@
 - ```Fix : XXX (00%)``` : 기능이나 타 요소에 대한 수정이 진행되었을 때 사용합니다.
    - 진행률은 선택사항입니다.
    
-## WIKI Link
-<div align="center">
+## Architecture
+- Java Springboot
+- Maria DB (RDS)
+- AWS EC2
+- AWS S3
 
-|[Wiki Main](https://github.com/Jun2-Lee/Toy_project/wiki)|[:framed_picture:Wireframe](https://www.figma.com/file/My0DWWYkyrb8Wlx4JANGQC/%ED%86%A0%EC%9D%B4%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EB%A0%88%EC%9D%B4%EC%95%84%EC%9B%83?node-id=151%3A5&t=RfP7pyKj0xQll2YN-0)|[:hammer_and_wrench:Tech Stack](https://github.com/Jun2-Lee/Toy_project/wiki/%F0%9F%9B%A0%EF%B8%8F-Tech-Stack)|[:books:Requirements](https://github.com/Jun2-Lee/Toy_project/wiki/Requirement)|[:chart_with_upwards_trend:Diagram](https://github.com/Jun2-Lee/Toy_project/wiki/%F0%9F%93%88-Diagram)|
-|:-:|:-:|:-:|:-:|:-:|
+## Responsibility
+- 회원가입 및 로그인 인증 구현
+  - 카카오 로그인 API 적용
+  - Spring Security, JWT 사용
+  - Redis 사용
+- 공동 구매, 나눔 게시글 기능 목록 구현
+  - 공동 구매, 나눔 게시글 상세 페이지 데이터 전달
+- 마이페이지 구현
+- 일정 기능 구현
+- 쪽지 기능 구현
+  - WebSocket이 아닌, 단순 REST API 형태의 쪽지 구현
 
-</div>
+## Wireframe
