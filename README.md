@@ -1,9 +1,7 @@
 # <p align="center"> Project Naong! : Backend Repository</p>
 
 <div align = "center>  
-
   <img src="https://github.com/Jinseop-Sim/Naong/assets/71700079/aa6c47cd-284a-434d-9d1e-aded7434fb76"></img>  
-
 </div>
 
 <div align ="center">
