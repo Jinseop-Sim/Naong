@@ -33,11 +33,16 @@
 </div>
    
 ## Architecture
-![서버아키텍처 drawio](https://github.com/Jinseop-Sim/Naong/assets/71700079/d3a8b631-70fa-4440-83e1-4cf1fd2c2daf)  
+![_서버 아키텍처 drawio](https://github.com/Jinseop-Sim/Naong/assets/71700079/a5d45783-4004-43a4-a346-2b35f4ebe5a1)  
+
 - Java Springboot
-  - 안정성이 검증된, 강력한 프레임워크인 Springboot를 채택하였습니다.
+  - 안정성이 검증된 프레임워크인 Springboot를 채택하였습니다.
+  - Interpreter가 아닌 Compiler로, 빠른 실행 속도가 장점입니다.
 - Spring Data JPA
+  - DB에 접근할 수 있는 ORM 중 호환성이 좋은 JPA를 사용하였습니다.
 - Maria DB (RDS)
+- Spring Security
+  - 사용자의 인증을 위해 Spring Security를 사용하였습니다.
 - Redis
   - Refresh Token의 저장을 위해 사용되었습니다.
   - DB에 저장하지 않아 Token의 탈취 위험을 줄이고 DB 조회 빈도를 줄일 수 있습니다.
@@ -46,13 +51,13 @@
   - EC2 환경에 백엔드 서버를 배포하였습니다.
 - AWS S3
   - S3 Bucket에 프론트엔드를 배포하여 외부에서 접근할 수 있도록 했습니다.
-  - 프로필 사진, 게시글 첨부 사진 등 이미지 관리에도 사용됩니다.
+  - 프로필 사진, 게시글 첨부 사진 등 이미지 관리에도 사용되었습니다.
+- OAuth 2.0
+  - 소셜 로그인 서비스를 구현하기 위해, 카카오 로그인 API를 사용하였습니다.
 
 ## Responsibility
 - 회원가입 및 로그인 인증 구현
-  - 카카오 로그인 API 적용
-  - Spring Security, JWT 사용
-  - Redis 사용
+  - 소셜 로그인 API 적용
 - 공동 구매, 나눔 게시글 기능 목록 구현
   - 공동 구매, 나눔 게시글 상세 페이지 데이터 전달
 - 마이페이지 구현
