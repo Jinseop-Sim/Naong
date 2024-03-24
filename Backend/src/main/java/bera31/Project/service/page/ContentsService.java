@@ -5,6 +5,7 @@ import bera31.Project.domain.dto.requestdto.ContentsRequestDto;
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
 import bera31.Project.domain.dto.responsedto.CommentResponseDto;
 import bera31.Project.domain.dto.responsedto.ContentsListResponseDto;
+import bera31.Project.domain.dto.responsedto.ContentsResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.member.Member;
@@ -43,6 +44,16 @@ public class ContentsService {
     private final IntersectionRepository intersectionRepository;
     private final LikeRepository likeRepository;
 
+    public Long postContents(ContentsRequestDto contentsRequestDto, ContentsType contentsType) throws IOException {
+        Member currentMember = loadCurrentMember();
+
+        Contents newContents = new Contents(contentsRequestDto, currentMember, contentsType);
+        //newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
+        currentMember.postContents(newContents);
+
+        return contentsRepository.save(newContents);
+    }
+
     @Transactional(readOnly = true)
     public List<ContentsListResponseDto> findAll(ContentsType contentsType) {
         List<Contents> findedContents = contentsRepository.findAll(contentsType);
@@ -55,18 +66,18 @@ public class ContentsService {
     }
 
     @Transactional(readOnly = true)
-    public List<GroupBuyingListResponseDto> findAllWithPaging(int page) {
+    public List<ContentsListResponseDto> findAllWithPaging(int page) {
         List<Contents> findedContents = contentsRepository.findAllWithPaging(page);
 
         if(!findedContents.isEmpty()) {
             checkExpiredPost(findedContents);
         }
 
-        return findedContents.stream().map(GroupBuyingListResponseDto::new).collect(Collectors.toList());
+        return findedContents.stream().map(ContentsListResponseDto::new).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public GroupBuyingResponseDto findById(Long postId) {
+    public ContentsResponseDto findById(Long postId) {
         boolean checkMine = false;
         Member currentMember = loadCurrentMember();
         Contents currentContents = contentsRepository.findById(postId);
@@ -77,17 +88,7 @@ public class ContentsService {
 
         List<CommentResponseDto> commentResponseDtoList =
                 makeCommentList(contentsRepository.findById(postId).getComments());
-        return new GroupBuyingResponseDto(contentsRepository.findById(postId), commentResponseDtoList, checkMine);
-    }
-
-    public Long postContents(ContentsRequestDto contentsRequestDto, ContentsType contentsType) throws IOException {
-        Member currentMember = loadCurrentMember();
-
-        Contents newContents = new Contents(contentsRequestDto, currentMember, contentsType);
-        //newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
-        currentMember.postContents(newContents);
-
-        return contentsRepository.save(newContents);
+        return new ContentsResponseDto(contentsRepository.findById(postId), commentResponseDtoList, checkMine);
     }
 
     public Long updateContents(ContentsRequestDto contentsRequestDto, Long postId) throws IOException {
@@ -97,8 +98,9 @@ public class ContentsService {
         return findedContents.update(contentsRequestDto);
     }
 
-    public void deleteContents(Long postId) {
+    public Long deleteContents(Long postId) {
         contentsRepository.delete(contentsRepository.findById(postId));
+        return postId;
     }
 
     public Long participantContents(Long postId) {
@@ -121,7 +123,7 @@ public class ContentsService {
         Optional<LikedContents> existsLike = likeRepository.findByPostIdAndUserId(currentContents, currentMember);
 
         if(existsLike.isPresent()){
-            //currentMember.getLikedGroupBuyings().remove(existsLike.get());
+            currentMember.getLikedContents().remove(existsLike.get());
             return likeRepository.delete(existsLike.get());
         }
 

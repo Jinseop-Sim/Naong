@@ -22,9 +22,9 @@ public class IntersectionRepository {
     }
 
 
-    public List<GroupBuyingIntersection> findByUserId(Member participant) {
-        return em.createQuery("select gbi from GroupBuyingIntersection gbi join fetch gbi.groupBuying " +
-                        "where gbi.participant =: participant", GroupBuyingIntersection.class)
+    public List<ContentsParticipation> findByUserId(Member participant) {
+        return em.createQuery("select cp from ContentsParticipation cp join fetch cp.contents " +
+                        "where cp.participant =: participant", ContentsParticipation.class)
                 .setParameter("participant", participant)
                 .getResultList();
     }

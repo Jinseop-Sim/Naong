@@ -13,12 +13,14 @@ public class CommentRepository {
 
     private final EntityManager em;
 
-    public void save(Comment comment) {
+    public Long save(Comment comment) {
         em.persist(comment);
+        return comment.getId();
     }
 
-    public void delete(Comment comment) {
+    public Long delete(Comment comment) {
         em.remove(comment);
+        return comment.getId();
     }
 
     public List<Comment> findAll() {

@@ -11,14 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class MyPageResponseDto {
-    String image;
+    String profileImage;
     String nickname;
-    List<SimpleContentsResponseDto> simpleGroupBuyingList;
-    List<SimpleContentsResponseDto> simpleLikedGroupBuyingList;
-    List<SimpleContentsResponseDto> simpleParticipantingGroupBuyingList;
-    List<SimpleContentsResponseDto> simpleSharingList;
-    List<SimpleContentsResponseDto> simpleLikedSharingList;
-    List<SimpleContentsResponseDto> simpleDutchPayList;
-    List<SimpleContentsResponseDto> simpleParticipantingDutchPayList;
+    List<SimpleContentsResponseDto> simpleContentsList;
+    List<SimpleContentsResponseDto> simpleLikedContentsList;
+    List<SimpleContentsResponseDto> simpleParticipantingContentsList;
     List<TodayScheduleResponseDto> todayScheduleList;
 }

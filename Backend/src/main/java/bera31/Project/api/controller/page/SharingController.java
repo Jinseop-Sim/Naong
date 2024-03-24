@@ -1,10 +1,15 @@
 package bera31.Project.api.controller.page;
 
 import bera31.Project.domain.dto.requestdto.CommentRequestDto;
+import bera31.Project.domain.dto.requestdto.ContentsRequestDto;
 import bera31.Project.domain.dto.requestdto.SharingRequestDto;
+import bera31.Project.domain.dto.responsedto.ContentsListResponseDto;
+import bera31.Project.domain.dto.responsedto.ContentsResponseDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingResponseDto;
+import bera31.Project.domain.page.ContentsType;
 import bera31.Project.service.CommentService;
+import bera31.Project.service.page.ContentsService;
 import bera31.Project.service.page.SharingService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -21,15 +26,15 @@ import java.util.List;
 @RequestMapping("/api/sharing")
 public class SharingController {
 
-    private final SharingService sharingService;
+    private final ContentsService contentsService;
     private final CommentService commentService;
 
     @Operation(summary = "나눔 글 전체 목록 조회 API입니다.",
             description = "전체 조회에도 각 게시글 마다 고유 id를 같이 넣어놨습니다.\n\n" +
                     "해당 값은 글 내용 조회 시, 수정 시, 삭제 시, 찜 기능에 사용됩니다.")
     @GetMapping
-    public ResponseEntity<List<SharingListResponseDto>> findAllSharing() {
-        return new ResponseEntity<>(sharingService.findAllSharing(), HttpStatus.OK);
+    public ResponseEntity<List<ContentsListResponseDto>> findAllSharing(@RequestBody ContentsType contentsType) {
+        return new ResponseEntity<>(contentsService.findAll(contentsType), HttpStatus.OK);
     }
 
     @Operation(summary = "나눔 글 전체 목록 조회 API입니다.",
@@ -37,8 +42,8 @@ public class SharingController {
                     "페이지네이션까지 완료한 조회입니다.\n\n" +
                     "해당 값은 글 내용 조회 시, 수정 시, 삭제 시, 찜 기능에 사용됩니다.")
     @GetMapping("/page/{pageNumber}")
-    public ResponseEntity<List<SharingListResponseDto>> findAllSharingWithPaging(@PathVariable int pageNumber) {
-        return new ResponseEntity<>(sharingService.findAllSharingWithPaging(pageNumber), HttpStatus.OK);
+    public ResponseEntity<List<ContentsListResponseDto>> findAllSharingWithPaging(@PathVariable int pageNumber) {
+        return new ResponseEntity<>(contentsService.findAllWithPaging(pageNumber), HttpStatus.OK);
     }
 
     @Operation(summary = "나눔 글 내용 조회 API입니다.",
@@ -47,66 +52,65 @@ public class SharingController {
                     "checkMine 변수로 본인 글인지 확인 가능하게 해두었습니다\n\n" +
                     "쪽지 보내기 기능이 사용될 경우, 해당 작성자의 id로 보내면 됩니다.")
     @GetMapping("/{postId}")
-    public ResponseEntity<SharingResponseDto> findSharing(@PathVariable Long postId) {
-        return new ResponseEntity<>(sharingService.findSharing(postId), HttpStatus.OK);
+    public ResponseEntity<ContentsResponseDto> findSharing(@PathVariable Long postId) {
+        return new ResponseEntity<>(contentsService.findById(postId), HttpStatus.OK);
     }
 
     @Operation(summary = "나눔 글 작성 API입니다.",
             description = "사진은 필수로 받습니다.\n\n" +
                     "form-data/multipart 형식으로 값을 보내주시면 됩니다.")
     @PostMapping
-    public void postSharing(@RequestBody SharingRequestDto sharingRequestDto) throws IOException {
-        sharingService.postSharing(sharingRequestDto);
+    public ResponseEntity<Long> postSharing(@RequestBody ContentsRequestDto contentsRequestDto, ContentsType contentsType) throws IOException {
+        return new ResponseEntity<>(contentsService.postContents(contentsRequestDto, contentsType), HttpStatus.OK);
     }
 
     @Operation(summary = "나눔 글 내용 수정 API입니다.",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.")
     @PutMapping("/{postId}")
-    public void updateSharing(@PathVariable Long postId,
-                              @RequestBody SharingRequestDto sharingRequestDto) {
-        sharingService.updateSharing(postId, sharingRequestDto);
+    public ResponseEntity<Long> updateSharing(@PathVariable Long postId, @RequestBody ContentsRequestDto contentsRequestDto) throws IOException {
+        return new ResponseEntity<>(contentsService.updateContents(contentsRequestDto, postId), HttpStatus.OK);
     }
 
     @Operation(summary = "나눔 글 삭제 API입니다.",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.")
     @DeleteMapping("/{postId}")
-    public void deleteSharing(@PathVariable Long postId) {
-        sharingService.deleteSharing(postId);
+    public ResponseEntity<Long> deleteSharing(@PathVariable Long postId) {
+        return new ResponseEntity<>(contentsService.deleteContents(postId), HttpStatus.OK);
     }
 
     @Operation(summary = "나눔 글 내용 조회 API입니다.",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.")
     @PostMapping("/{postId}/like")
     public ResponseEntity<String> pushLikeSharing(@PathVariable Long postId) {
-        return new ResponseEntity<>(sharingService.pushLikeSharing(postId), HttpStatus.OK);
+        return new ResponseEntity<>(contentsService.pushLikeContents(postId), HttpStatus.OK);
     }
 
     @Operation(summary = "거래 완료(조기 마감) API",
             description = "글 작성자가 버튼을 눌러 거래를 조기 마감시키는 API 입니다.")
     @PostMapping("/{postId}/finish")
     public ResponseEntity<String> closeSharing(@PathVariable Long postId){
-        return new ResponseEntity<>(sharingService.closeSharing(postId), HttpStatus.OK);
+        return new ResponseEntity<>(contentsService.closeContent(postId), HttpStatus.OK);
     }
 
     @Operation(summary = "재료 나눔 댓글 작성 API",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시고, 댓글 내용은 Dto 형식으로 보내주시면 됩니다.")
     @PostMapping("/{postId}/comment")
     public void postComment(@RequestBody CommentRequestDto commentRequestDto, @PathVariable Long postId) {
-        commentService.saveSharingComment(commentRequestDto, postId);
+        commentService.saveComment(commentRequestDto, postId);
     }
 
     @Operation(summary = "재료 나눔 답글 작성 API",
             description = "글의 고유 id 뒤에 댓글 id를 붙여서 Request Parameter 형식으로 URL에 보내주시고,\n\n" +
                     " 댓글 내용은 Dto 형식으로 보내주시면 됩니다.")
     @PostMapping("/{postId}/{commentId}/childComment")
-    public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId,@RequestBody CommentRequestDto commentRequestDto) {
+    public void postChildComment(@PathVariable Long commentId,@RequestBody CommentRequestDto commentRequestDto) {
         commentService.saveChildComment(commentRequestDto, commentId);
     }
     @Operation(summary = "재료 나눔 댓글 삭제 API",
             description = "글의 고유 id 뒤에 댓글 id를 붙여서 Request Parameter 형식으로 URL에 보내주시면 됩니다.\n\n" +
                     "(답글도 동일합니다)")
     @DeleteMapping("/{postId}/{commentId}")
-    public void deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
+    public void deleteComment(@PathVariable Long commentId) {
         commentService.deleteComment(commentId);
     }
 

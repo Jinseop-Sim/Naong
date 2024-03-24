@@ -6,10 +6,7 @@ import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponse
 import bera31.Project.domain.dto.responsedto.groupbuying.SimpleContentsResponseDto;
 import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
 import bera31.Project.domain.member.Member;
-import bera31.Project.domain.page.intersection.DutchPayIntersection;
-import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
-import bera31.Project.domain.page.intersection.LikedGroupBuying;
-import bera31.Project.domain.page.intersection.LikedSharing;
+import bera31.Project.domain.page.intersection.*;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.IntersectionRepository;
 import bera31.Project.utility.SecurityUtility;
@@ -30,74 +27,37 @@ public class MyPageService {
     public MyPageResponseDto showMyPage() {
         Member findedMember = loadCurrentMember();
 
-        // Refactoring 대상!!
-
-
-        List<TodayScheduleResponseDto> todaySchedules
-                = findedMember.getMemoList()
-                .stream()
-                .limit(4)
-                .filter(s -> s.getTargetDate().equals(LocalDate.now()))
-                .map(TodayScheduleResponseDto::new)
-                .collect(Collectors.toList());
-
-        return new MyPageResponseDto();
+        return new MyPageResponseDto(findedMember.getProfileImage(), findedMember.getNickname(),
+                    loadMyContents(findedMember), loadParticipantingGroupBuying(findedMember),
+                loadFavoriteGroupBuying(findedMember), loadTodaySchedules(findedMember));
     }
 
-    /*public List<GroupBuyingListResponseDto> showMyGroupBuying() {
-        Member findedMember = loadCurrentMember();
+    public List<TodayScheduleResponseDto> loadTodaySchedules(Member findedMember){
+        return findedMember.getMemoList().stream()
+                .limit(4).filter(sch -> sch.getTargetDate().equals(LocalDate.now()))
+                .map(TodayScheduleResponseDto::new).collect(Collectors.toList());
+    }
 
-        return findedMember.getBuyingList().stream()
-                .map(GroupBuyingListResponseDto::new)
-                .collect(Collectors.toList());
-    }*/
-
-    /*public List<DutchPayListResponseDto> showMyDutchPay() {
-        Member currentMember = loadCurrentMember();
-
-        return currentMember.getDutchPayList().stream()
-                .map(DutchPayListResponseDto::new)
+    public List<SimpleContentsResponseDto> loadMyContents(Member findedMember) {
+        return findedMember.getContentsList().stream()
+                .map(SimpleContentsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
-    public List<GroupBuyingListResponseDto> showParticipantingGroupBuying() {
-        Member currentMember = loadCurrentMember();
 
-        return currentMember.getParticipantingGroupBuying()
-                .stream()
-                .map(GroupBuyingIntersection::getGroupBuying)
-                .map(GroupBuyingListResponseDto::new)
+    public List<SimpleContentsResponseDto> loadParticipantingGroupBuying(Member findedMember) {
+        return findedMember.getParticipantingContents().stream()
+                .map(ContentsParticipation::getContents)
+                .map(SimpleContentsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
-    public List<DutchPayListResponseDto> showParticipantingDutchPay() {
-        Member findedMember = loadCurrentMember();
-
-        return findedMember.getParticipantingDutchPay().stream()
-                .map(DutchPayIntersection::getDutchPay)
-                .map(DutchPayListResponseDto::new)
+    public List<SimpleContentsResponseDto> loadFavoriteGroupBuying(Member findedMember) {
+        return findedMember.getLikedContents().stream()
+                .map(LikedContents::getContents)
+                .map(SimpleContentsResponseDto::new)
                 .collect(Collectors.toList());
     }
-
-    public List<GroupBuyingListResponseDto> showFavoriteGroupBuying() {
-        Member currentMember = loadCurrentMember();
-
-        return currentMember.getLikedGroupBuyings()
-                .stream()
-                .map(LikedGroupBuying::getGroupBuying)
-                .map(GroupBuyingListResponseDto::new)
-                .collect(Collectors.toList());
-    }*/
-
-    /*public List<SharingListResponseDto> showFavoriteSharing() {
-        Member currentMember = loadCurrentMember();
-
-        return currentMember.getLikedSharings()
-                .stream()
-                .map(LikedSharing::getSharing)
-                .map(SharingListResponseDto::new)
-                .collect(Collectors.toList());
-    }*/
 
     private Member loadCurrentMember() {
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();

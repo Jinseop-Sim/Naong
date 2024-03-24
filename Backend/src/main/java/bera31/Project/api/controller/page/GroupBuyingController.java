@@ -4,6 +4,7 @@ import bera31.Project.domain.dto.requestdto.CommentRequestDto;
 import bera31.Project.domain.dto.requestdto.ContentsRequestDto;
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
 import bera31.Project.domain.dto.responsedto.ContentsListResponseDto;
+import bera31.Project.domain.dto.responsedto.ContentsResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.page.Contents;
@@ -26,7 +27,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/groupBuying")
+@RequestMapping("/groupBuying")
 public class GroupBuyingController {
     private final GroupBuyingService groupBuyingService;
     private final ContentsService contentsService;
@@ -47,8 +48,8 @@ public class GroupBuyingController {
                     "페이지네이션까지 된 목록 조회입니다.\n\n" +
                     "해당 값은 글 내용 조회 시, 수정 시, 삭제 시, 참여 기능, 찜 기능에 사용됩니다.")
     @GetMapping("/page/{pageNumber}")
-    public ResponseEntity<List<GroupBuyingListResponseDto>> findAllGroupBuyingWithPaging(@PathVariable int pageNumber) {
-        return new ResponseEntity<>(groupBuyingService.findAllGroupBuyingWithPaging(pageNumber), HttpStatus.OK);
+    public ResponseEntity<List<ContentsListResponseDto>> findAllGroupBuyingWithPaging(@PathVariable int pageNumber) {
+        return new ResponseEntity<>(contentsService.findAllWithPaging(pageNumber), HttpStatus.OK);
     }
 
     @Operation(summary = "공동구매 글 작성 API입니다.",
@@ -63,10 +64,9 @@ public class GroupBuyingController {
     @Operation(summary = "공동구매 글 수정 API 입니다.",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.")
     @PutMapping("/{postId}")
-    public ResponseEntity<Long> updateGroupBuying(@RequestPart GroupBuyingRequestDto groupBuyingRequestDto,
-                                                  @RequestPart MultipartFile postImage,
+    public ResponseEntity<Long> updateGroupBuying(@RequestPart ContentsRequestDto contentsRequestDto,
                                                   @PathVariable Long postId) throws IOException {
-        return new ResponseEntity<>(groupBuyingService.updateGroupBuying(groupBuyingRequestDto, postImage, postId), HttpStatus.OK);
+        return new ResponseEntity<>(contentsService.updateContents(contentsRequestDto, postId), HttpStatus.OK);
     }
 
     @Operation(summary = "공동구매 글 상세 조회 API 입니다.",
@@ -75,29 +75,29 @@ public class GroupBuyingController {
                     "checkMine 변수로 본인 글인지 확인 가능하게 해두었습니다\n\n" +
                     "쪽지 보내기 기능이 사용될 경우, 해당 작성자의 id로 보내면 됩니다.")
     @GetMapping("/{postId}")
-    public ResponseEntity<GroupBuyingResponseDto> findGroupBuying(@PathVariable Long postId) {
-        return new ResponseEntity<>(groupBuyingService.findGroupBuying(postId), HttpStatus.OK);
+    public ResponseEntity<ContentsResponseDto> findGroupBuying(@PathVariable Long postId) {
+        return new ResponseEntity<>(contentsService.findById(postId), HttpStatus.OK);
     }
 
     @Operation(summary = "공동구매 신청 api",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.")
     @PostMapping("/{postId}")
     public ResponseEntity<Long> participantGroupBuying(@PathVariable Long postId) {
-        return new ResponseEntity<>(groupBuyingService.participantGroupBuying(postId), HttpStatus.OK);
+        return new ResponseEntity<>(contentsService.participantContents(postId), HttpStatus.OK);
     }
 
     @Operation(summary = "거래 완료(조기 마감) API",
             description = "글 작성자가 버튼을 눌러 거래를 조기 마감시키는 API입니다.")
     @PostMapping("/{postId}/finish")
     public ResponseEntity<String> closeGroupBuying(@PathVariable Long postId) {
-        return new ResponseEntity<>(groupBuyingService.closeGroupBuying(postId), HttpStatus.OK);
+        return new ResponseEntity<>(contentsService.closeContent(postId), HttpStatus.OK);
     }
 
     @Operation(summary = "공동구매 찜 api",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.")
     @PostMapping("/{postId}/like")
     public ResponseEntity<String> pushLikeGroupBuying(@PathVariable Long postId) {
-        return new ResponseEntity<>(groupBuyingService.pushLikeGroupBuying(postId), HttpStatus.OK);
+        return new ResponseEntity<>(contentsService.pushLikeContents(postId), HttpStatus.OK);
     }
 
 /*    @Operation(summary = "공동구매 글 찾기", description = "공동구매 글 검색 시 요청 경로입니다")
@@ -109,32 +109,32 @@ public class GroupBuyingController {
     @Operation(summary = "공동구매 글 삭제",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시면 됩니다.")
     @DeleteMapping("/{postId}") // 단순 글 삭제
-    public void deleteGroupBuying(@PathVariable Long postId) {
-        groupBuyingService.deleteGroupBuying(postId);
+    public ResponseEntity<Long> deleteGroupBuying(@PathVariable Long postId) {
+        return new ResponseEntity<>(contentsService.deleteContents(postId), HttpStatus.OK);
     }
 
     @Operation(summary = "공동 구매 댓글 작성 API",
             description = "글의 고유 id를 Request Parameter 형식으로 URL에 보내주시고,\n\n" +
                     " 댓글 내용은 Dto 형식으로 보내주시면 됩니다.")
     @PostMapping("/{postId}/comment")
-    public void postComment(@RequestBody CommentRequestDto commentRequestDto, @PathVariable Long postId) {
-        commentService.saveGroupBuyingComment(commentRequestDto, postId);
+    public ResponseEntity<Long> postComment(@RequestBody CommentRequestDto commentRequestDto, @PathVariable Long postId) {
+        return new ResponseEntity<>(commentService.saveComment(commentRequestDto, postId), HttpStatus.OK);
     }
 
     @Operation(summary = "공동 구매 답글 작성 API",
             description = "글의 고유 id 뒤에 댓글 id를 붙여서 Request Parameter 형식으로 URL에 보내주시고,\n\n" +
                     " 댓글 내용은 Dto 형식으로 보내주시면 됩니다.")
     @PostMapping("/{postId}/{commentId}/childComment")
-    public void postChildComment(@PathVariable Long postId, @PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto) {
-        commentService.saveChildComment(commentRequestDto, commentId);
+    public ResponseEntity<Long> postChildComment(@PathVariable Long commentId, @RequestBody CommentRequestDto commentRequestDto) {
+        return new ResponseEntity<>(commentService.saveChildComment(commentRequestDto, commentId), HttpStatus.OK);
     }
 
     @Operation(summary = "재료 나눔 답글 작성 API",
             description = "글의 고유 id 뒤에 댓글 id를 붙여서 Request Parameter 형식으로 URL에 보내주시고,\n\n" +
                     " 댓글 내용은 Dto 형식으로 보내주시면 됩니다.")
     @DeleteMapping("/{postId}/{commentId}")
-    public void deleteComment(@PathVariable Long postId, @PathVariable Long commentId) {
-        commentService.deleteComment(commentId);
+    public ResponseEntity<Long> deleteComment(@PathVariable Long commentId) {
+        return new ResponseEntity<>(commentService.deleteComment(commentId), HttpStatus.OK);
     }
 
 }
