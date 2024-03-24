@@ -32,6 +32,7 @@
 </div>
    
 ## Architecture
+![server architecture drawio](https://github.com/Jinseop-Sim/Naong/assets/71700079/e2ced61a-5b42-4326-8911-afc8db759936)  
 - Java Springboot
 - Maria DB (RDS)
 - AWS EC2
