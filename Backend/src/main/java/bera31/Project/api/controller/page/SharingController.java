@@ -55,9 +55,8 @@ public class SharingController {
             description = "사진은 필수로 받습니다.\n\n" +
                     "form-data/multipart 형식으로 값을 보내주시면 됩니다.")
     @PostMapping
-    public void postSharing(@RequestPart SharingRequestDto sharingRequestDto,
-                            @RequestPart MultipartFile postImage) throws IOException {
-        sharingService.postSharing(sharingRequestDto, postImage);
+    public void postSharing(@RequestBody SharingRequestDto sharingRequestDto) throws IOException {
+        sharingService.postSharing(sharingRequestDto);
     }
 
     @Operation(summary = "나눔 글 내용 수정 API입니다.",

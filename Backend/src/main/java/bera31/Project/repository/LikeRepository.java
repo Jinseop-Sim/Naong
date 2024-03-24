@@ -1,7 +1,9 @@
 package bera31.Project.repository;
 
 import bera31.Project.domain.member.Member;
+import bera31.Project.domain.page.Contents;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
+import bera31.Project.domain.page.intersection.LikedContents;
 import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import bera31.Project.domain.page.intersection.LikedSharing;
 import bera31.Project.domain.page.sharing.Sharing;
@@ -27,6 +29,11 @@ public class LikeRepository {
         return likedSharing.getId().toString();
     }
 
+    public String save(LikedContents likedContents) {
+        em.persist(likedContents);
+        return likedContents.getId().toString();
+    }
+
     public Optional<LikedGroupBuying> findByPostIdAndUserId(GroupBuying groupBuying, Member member) {
         List<LikedGroupBuying> resultList = em.createQuery("select lg from LikedGroupBuying lg " +
                         "where lg.groupBuying =: groupBuying and lg.member =: member", LikedGroupBuying.class)
@@ -47,12 +54,26 @@ public class LikeRepository {
         return resultList.stream().findAny();
     }
 
+    public Optional<LikedContents> findByPostIdAndUserId(Contents contents, Member member) {
+        List<LikedContents> resultList = em.createQuery("select lc from LikedContents lc " +
+                        "where lc.contents =: contents and lc.user =: member", LikedContents.class)
+                .setParameter("contents", contents)
+                .setParameter("member", member)
+                .getResultList();
+
+        return resultList.stream().findAny();
+    }
+
     public String delete(LikedGroupBuying likedGroupBuying){
         em.remove(likedGroupBuying);
         return "찜 취소";
     }
     public String delete(LikedSharing likedSharing){
         em.remove(likedSharing);
+        return "찜 취소";
+    }
+    public String delete(LikedContents likedContents){
+        em.remove(likedContents);
         return "찜 취소";
     }
 }

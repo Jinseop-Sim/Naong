@@ -31,58 +31,7 @@ public class MyPageService {
         Member findedMember = loadCurrentMember();
 
         // Refactoring 대상!!
-        List<SimpleContentsResponseDto> simpleGroupBuyinglist
-                = findedMember.getBuyingList()
-                .stream()
-                .limit(4)
-                .map(SimpleContentsResponseDto::new)
-                .collect(Collectors.toList());
 
-        List<SimpleContentsResponseDto> simpleLikedGroupBuyinglist
-                = findedMember.getLikedGroupBuyings()
-                .stream()
-                .limit(4)
-                .map(LikedGroupBuying::getGroupBuying)
-                .map(SimpleContentsResponseDto::new)
-                .collect(Collectors.toList());
-
-        List<SimpleContentsResponseDto> simpleParticipantingGroupBuyingList
-                = findedMember.getParticipantingGroupBuying()
-                .stream()
-                .limit(4)
-                .map(GroupBuyingIntersection::getGroupBuying)
-                .map(SimpleContentsResponseDto::new)
-                .collect(Collectors.toList());
-
-        List<SimpleContentsResponseDto> simpleSharingList
-                = findedMember.getSharingList()
-                .stream()
-                .limit(4)
-                .map(SimpleContentsResponseDto::new)
-                .collect(Collectors.toList());
-
-        List<SimpleContentsResponseDto> simpleLikedSharingList
-                = findedMember.getLikedSharings()
-                .stream()
-                .limit(4)
-                .map(LikedSharing::getSharing)
-                .map(SimpleContentsResponseDto::new)
-                .collect(Collectors.toList());
-
-        List<SimpleContentsResponseDto> simpleDutchPayList
-                = findedMember.getDutchPayList()
-                .stream()
-                .limit(4)
-                .map(SimpleContentsResponseDto::new)
-                .collect(Collectors.toList());
-
-        List<SimpleContentsResponseDto> simpleParticipantingDutchPayList
-                = findedMember.getParticipantingDutchPay()
-                .stream()
-                .limit(4)
-                .map(DutchPayIntersection::getDutchPay)
-                .map(SimpleContentsResponseDto::new)
-                .collect(Collectors.toList());
 
         List<TodayScheduleResponseDto> todaySchedules
                 = findedMember.getMemoList()
@@ -92,23 +41,18 @@ public class MyPageService {
                 .map(TodayScheduleResponseDto::new)
                 .collect(Collectors.toList());
 
-        return new MyPageResponseDto(
-                findedMember.getProfileImage(), findedMember.getNickname(),
-                simpleGroupBuyinglist, simpleLikedGroupBuyinglist, simpleParticipantingGroupBuyingList,
-                simpleSharingList, simpleLikedSharingList,
-                simpleDutchPayList, simpleParticipantingDutchPayList,
-                todaySchedules);
+        return new MyPageResponseDto();
     }
 
-    public List<GroupBuyingListResponseDto> showMyGroupBuying() {
+    /*public List<GroupBuyingListResponseDto> showMyGroupBuying() {
         Member findedMember = loadCurrentMember();
 
         return findedMember.getBuyingList().stream()
                 .map(GroupBuyingListResponseDto::new)
                 .collect(Collectors.toList());
-    }
+    }*/
 
-    public List<DutchPayListResponseDto> showMyDutchPay() {
+    /*public List<DutchPayListResponseDto> showMyDutchPay() {
         Member currentMember = loadCurrentMember();
 
         return currentMember.getDutchPayList().stream()
@@ -143,9 +87,9 @@ public class MyPageService {
                 .map(LikedGroupBuying::getGroupBuying)
                 .map(GroupBuyingListResponseDto::new)
                 .collect(Collectors.toList());
-    }
+    }*/
 
-    public List<SharingListResponseDto> showFavoriteSharing() {
+    /*public List<SharingListResponseDto> showFavoriteSharing() {
         Member currentMember = loadCurrentMember();
 
         return currentMember.getLikedSharings()
@@ -153,7 +97,7 @@ public class MyPageService {
                 .map(LikedSharing::getSharing)
                 .map(SharingListResponseDto::new)
                 .collect(Collectors.toList());
-    }
+    }*/
 
     private Member loadCurrentMember() {
         String currentMemberEmail = SecurityUtility.getCurrentMemberEmail();

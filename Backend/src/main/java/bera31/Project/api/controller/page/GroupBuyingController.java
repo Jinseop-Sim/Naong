@@ -1,10 +1,15 @@
 package bera31.Project.api.controller.page;
 
 import bera31.Project.domain.dto.requestdto.CommentRequestDto;
+import bera31.Project.domain.dto.requestdto.ContentsRequestDto;
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
+import bera31.Project.domain.dto.responsedto.ContentsListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
+import bera31.Project.domain.page.Contents;
+import bera31.Project.domain.page.ContentsType;
 import bera31.Project.service.CommentService;
+import bera31.Project.service.page.ContentsService;
 import bera31.Project.service.page.GroupBuyingService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +29,7 @@ import java.util.List;
 @RequestMapping("/api/groupBuying")
 public class GroupBuyingController {
     private final GroupBuyingService groupBuyingService;
+    private final ContentsService contentsService;
     private final CommentService commentService;
 
     @Operation(summary = "공동 구매 전체 글 조회 API입니다.",
@@ -31,8 +37,8 @@ public class GroupBuyingController {
                     "전체 조회에도 각 게시글 마다 고유 id를 같이 보내놨습니다.\n\n" +
                     "해당 값은 글 내용 조회 시, 수정 시, 삭제 시, 참여 기능, 찜 기능에 사용됩니다.")
     @GetMapping
-    public ResponseEntity<List<GroupBuyingListResponseDto>> findAllGroupBuying() {
-        return new ResponseEntity<>(groupBuyingService.findAllGroupBuying(), HttpStatus.OK);
+    public ResponseEntity<List<ContentsListResponseDto>> findAllGroupBuying(@RequestParam ContentsType contentsType) {
+        return new ResponseEntity<>(contentsService.findAll(contentsType), HttpStatus.OK);
     }
 
     @Operation(summary = "변경된 공동 구매 전체 글 조회 API입니다.",
@@ -49,8 +55,9 @@ public class GroupBuyingController {
             description = "사진은 필수 값입니다.\n\n" +
                     "form-data/multipart 형식으로 보내주시면 됩니다.")
     @PostMapping
-    public ResponseEntity<Long> postGroupBuying(@RequestBody GroupBuyingRequestDto groupBuyingRequestDto) throws IOException {
-        return new ResponseEntity<>(groupBuyingService.postGroupBuying(groupBuyingRequestDto), HttpStatus.OK);
+    public ResponseEntity<Long> postGroupBuying(@RequestBody ContentsRequestDto contentsRequestDto,
+                                                @RequestParam ContentsType contentsType) throws IOException {
+        return new ResponseEntity<>(contentsService.postContents(contentsRequestDto, contentsType), HttpStatus.OK);
     }
 
     @Operation(summary = "공동구매 글 수정 API 입니다.",

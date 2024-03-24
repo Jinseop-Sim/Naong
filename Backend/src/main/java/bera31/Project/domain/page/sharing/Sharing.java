@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Entity
+//@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 @DiscriminatorValue("S")
@@ -29,11 +29,10 @@ public class Sharing extends Contents {
     String gu;
     String dong;
 
-    @OneToMany(mappedBy = "sharing", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
-    List<LikedSharing> likedMemberList = new ArrayList<>();
+    /*@OneToMany(mappedBy = "sharing", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE, orphanRemoval = true)
+    List<LikedSharing> likedMemberList = new ArrayList<>();*/
 
     public Sharing(SharingRequestDto sharingRequestDto, Member member) {
-        super(member, sharingRequestDto.getTitle(), sharingRequestDto.getCategory(), sharingRequestDto.getContent());
         this.product = sharingRequestDto.getProduct();
         this.expiry = sharingRequestDto.getExpiry();
         this.deadLine = sharingRequestDto.getDeadLine();
@@ -43,9 +42,9 @@ public class Sharing extends Contents {
     }
 
     public void updateSharing(SharingRequestDto sharingRequestDto) {
-        this.title = sharingRequestDto.getTitle();
-        this.content = sharingRequestDto.getContent();
-        this.category = sharingRequestDto.getCategory();
+        //this.title = sharingRequestDto.getTitle();
+        //this.content = sharingRequestDto.getContent();
+        //this.category = sharingRequestDto.getCategory();
         this.product = sharingRequestDto.getProduct();
         this.expiry = sharingRequestDto.getExpiry();
         this.gu = sharingRequestDto.getGu();

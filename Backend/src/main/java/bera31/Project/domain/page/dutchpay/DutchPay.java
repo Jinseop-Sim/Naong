@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
+//@Entity
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -25,11 +25,10 @@ public class DutchPay extends Contents {
     LocalDateTime deadLine;
     String address;
     String detailAddress;
-    @OneToMany(mappedBy = "dutchPay", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<DutchPayIntersection> memberList = new ArrayList<>();
+    /*@OneToMany(mappedBy = "dutchPay", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<DutchPayIntersection> memberList = new ArrayList<>();*/
 
     public DutchPay(DutchPayRequestDto dutchPayRequestDto, Member member) {
-        super(member, null, dutchPayRequestDto.getCategory(), dutchPayRequestDto.getContent());
         this.store = dutchPayRequestDto.getStore();
         this.deliveryCost = dutchPayRequestDto.getDeliveryCost();
         this.limitMember = dutchPayRequestDto.getLimitMember();
@@ -39,6 +38,6 @@ public class DutchPay extends Contents {
     }
 
     public void addParticipantMember(DutchPayIntersection dutchPayIntersection) {
-        memberList.add(dutchPayIntersection);
+        //memberList.add(dutchPayIntersection);
     }
 }

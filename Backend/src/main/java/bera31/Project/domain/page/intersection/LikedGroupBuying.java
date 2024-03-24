@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 @Getter
 @NoArgsConstructor
 public class LikedGroupBuying {
@@ -16,11 +16,11 @@ public class LikedGroupBuying {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
+    //@ManyToOne
+    //@JoinColumn(name = "MEMBER_ID")
     private Member member;
-    @ManyToOne
-    @JoinColumn(name = "CONTENTS_ID")
+    //@ManyToOne
+    //@JoinColumn(name = "CONTENTS_ID")
     private GroupBuying groupBuying;
 
     public LikedGroupBuying(Member member, GroupBuying groupBuying) {

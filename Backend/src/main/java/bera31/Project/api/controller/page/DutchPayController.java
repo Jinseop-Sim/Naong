@@ -1,15 +1,22 @@
 package bera31.Project.api.controller.page;
 
 import bera31.Project.domain.dto.requestdto.CommentRequestDto;
+import bera31.Project.domain.dto.requestdto.ContentsRequestDto;
 import bera31.Project.domain.dto.requestdto.DutchPayRequestDto;
+import bera31.Project.domain.dto.responsedto.ContentsListResponseDto;
 import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayListResponseDto;
 import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayResponseDto;
+import bera31.Project.domain.page.ContentsType;
 import bera31.Project.service.CommentService;
+import bera31.Project.service.page.ContentsService;
 import bera31.Project.service.page.DutchPayService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -17,18 +24,19 @@ import java.util.List;
 @RequestMapping("/api/dutchPay")
 public class DutchPayController {
     private final DutchPayService dutchPayService;
+    private final ContentsService contentsService;
 
     @Operation(summary = "N빵 글 목록 조회", description = "N빵 글 목록 조회 시 요청하는 Api 입니다.")
     @GetMapping
-    public List<DutchPayListResponseDto> findAll() {
-        return dutchPayService.findAllDutchPay();
+    public ResponseEntity<List<ContentsListResponseDto>> findAll(@RequestParam ContentsType contentsType) {
+        return new ResponseEntity<>(contentsService.findAll(contentsType), HttpStatus.OK);
     }
 
     @Operation(summary = "N빵 글 작성", description = "N빵 글 작성 시 요청하는 Api 입니다.\n" +
             "주소와 상세주소를 각각 Address, DetailAddress로 따로 받습니다.")
     @PostMapping
-    public Long postDutchPay(@RequestBody DutchPayRequestDto dutchPayRequestDto) {
-        return dutchPayService.postDutchPay(dutchPayRequestDto);
+    public ResponseEntity<Long> postDutchPay(@RequestBody ContentsRequestDto contentsRequestDto, ContentsType contentsType) throws IOException {
+        return new ResponseEntity<>(contentsService.postContents(contentsRequestDto, contentsType), HttpStatus.OK);
     }
 
     @Operation(summary = "N빵 글 삭제", description = "N빵 글 삭제 요청 시 요청하는 Api 입니다.")

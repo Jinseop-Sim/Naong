@@ -2,6 +2,7 @@ package bera31.Project.repository.page;
 
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
+import bera31.Project.domain.page.intersection.ContentsParticipation;
 import bera31.Project.domain.page.intersection.DutchPayIntersection;
 import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
 import lombok.RequiredArgsConstructor;
@@ -15,16 +16,11 @@ import java.util.List;
 public class IntersectionRepository {
     private final EntityManager em;
 
-    public Long save(GroupBuyingIntersection groupBuyingIntersection) {
-        em.persist(groupBuyingIntersection);
-        return groupBuyingIntersection.getId();
+    public Long save(ContentsParticipation contentsParticipation) {
+        em.persist(contentsParticipation);
+        return contentsParticipation.getId();
     }
 
-    // Overloading
-    public Long save(DutchPayIntersection dutchPayIntersection) {
-        em.persist(dutchPayIntersection);
-        return dutchPayIntersection.getId();
-    }
 
     public List<GroupBuyingIntersection> findByUserId(Member participant) {
         return em.createQuery("select gbi from GroupBuyingIntersection gbi join fetch gbi.groupBuying " +

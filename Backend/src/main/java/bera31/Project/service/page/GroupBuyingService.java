@@ -1,14 +1,12 @@
 package bera31.Project.service.page;
 
 
-import bera31.Project.config.S3.S3Uploader;
 import bera31.Project.domain.comment.Comment;
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
 import bera31.Project.domain.dto.responsedto.CommentResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
 import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingResponseDto;
 import bera31.Project.domain.member.Member;
-import bera31.Project.domain.page.Contents;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
 import bera31.Project.domain.page.intersection.LikedGroupBuying;
@@ -18,8 +16,6 @@ import bera31.Project.repository.LikeRepository;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.GroupBuyingRepository;
 import bera31.Project.repository.page.IntersectionRepository;
-import bera31.Project.repository.page.PostRepository;
-import bera31.Project.service.CommentService;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,11 +40,10 @@ public class GroupBuyingService {
     private final MemberRepository memberRepository;
     private final IntersectionRepository intersectionRepository;
     private final LikeRepository likeRepository;
-    private final PostRepository postRepository;
 
     @Transactional(readOnly = true)
     public List<GroupBuyingListResponseDto> findAllGroupBuying() {
-        List<GroupBuying> findedGroupBuyings = postRepository.findAll();
+        List<GroupBuying> findedGroupBuyings = groupBuyingRepository.findAll();
 
         if(!findedGroupBuyings.isEmpty()) {
             checkExpiredPost(findedGroupBuyings);
@@ -89,7 +84,7 @@ public class GroupBuyingService {
 
         GroupBuying newGroupBuying = new GroupBuying(groupBuyingRequestDto, currentMember);
         //newGroupBuying.setImage(s3Uploader.upload(postImage, "groupBuying"));
-        currentMember.postGroupBuying(newGroupBuying);
+        //currentMember.postGroupBuying(newGroupBuying);
 
         return groupBuyingRepository.save(newGroupBuying);
     }
@@ -114,10 +109,11 @@ public class GroupBuyingService {
             throw new AlreadyFullException(ErrorResponse.ALREADY_FULL);
 
         GroupBuyingIntersection newGroupBuyingIntersection = new GroupBuyingIntersection(currentMember, currentPost);
-        currentMember.participantGroupBuying(newGroupBuyingIntersection);
+        //currentMember.participantGroupBuying(newGroupBuyingIntersection);
         currentPost.addMember(newGroupBuyingIntersection);
 
-        return intersectionRepository.save(newGroupBuyingIntersection);
+        //intersectionRepository.save(newGroupBuyingIntersection);
+        return 1L;
     }
 
     public String pushLikeGroupBuying(Long postId) {
@@ -127,12 +123,12 @@ public class GroupBuyingService {
         Optional<LikedGroupBuying> existsLike = likeRepository.findByPostIdAndUserId(currentGroupBuying, currentMember);
 
         if(existsLike.isPresent()){
-            currentMember.getLikedGroupBuyings().remove(existsLike.get());
+            //currentMember.getLikedGroupBuyings().remove(existsLike.get());
             return likeRepository.delete(existsLike.get());
         }
 
         LikedGroupBuying newLikedGroupBuying = new LikedGroupBuying(currentMember, currentGroupBuying);
-        currentMember.pushLikeGroupBuying(newLikedGroupBuying);
+        //currentMember.pushLikeGroupBuying(newLikedGroupBuying);
         return likeRepository.save(newLikedGroupBuying);
     }
 

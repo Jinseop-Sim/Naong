@@ -2,6 +2,7 @@ package bera31.Project.domain.dto.responsedto.groupbuying;
 
 import bera31.Project.domain.Address;
 import bera31.Project.domain.member.Member;
+import bera31.Project.domain.page.Contents;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -28,18 +29,18 @@ public class GroupBuyingListResponseDto {
     int currParticipant;
     boolean isFinish;
 
-    public GroupBuyingListResponseDto(GroupBuying groupBuying) {
-        Member author = groupBuying.getUser();
-        this.id = groupBuying.getId();
-        this.image = groupBuying.getImage();
+    public GroupBuyingListResponseDto(Contents contents) {
+        Member author = contents.getUser();
+        this.id = contents.getId();
+        this.image = contents.getImage();
         this.nickname = author.getNickname();
-        this.title = groupBuying.getTitle();
-        this.category = groupBuying.getCategory();
-        this.dong = groupBuying.getDong();
-        this.postTime = groupBuying.getPostTime();
-        this.deadLine = groupBuying.getDeadLine();
-        this.limit = groupBuying.getLimitMember();
-        this.currParticipant = groupBuying.getMemberList().size();
-        this.isFinish = groupBuying.isFinish();
+        this.title = contents.getTitle();
+        this.category = contents.getCategory();
+        this.dong = contents.getDong();
+        this.postTime = contents.getPostTime();
+        this.deadLine = contents.getDeadLine();
+        this.limit = contents.getMemberLimit();
+        this.currParticipant = contents.getMemberList().size();
+        this.isFinish = contents.isFinish();
     }
 }

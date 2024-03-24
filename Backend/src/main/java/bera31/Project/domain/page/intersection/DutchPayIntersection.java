@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 @NoArgsConstructor
 @Getter
 public class DutchPayIntersection {
@@ -15,11 +15,11 @@ public class DutchPayIntersection {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "PARTICIPANT_ID")
+    //@ManyToOne
+    //@JoinColumn(name = "PARTICIPANT_ID")
     private Member participant;
-    @ManyToOne
-    @JoinColumn(name = "CONTENTS_ID")
+    //@ManyToOne
+    //@JoinColumn(name = "CONTENTS_ID")
     private DutchPay dutchPay;
 
     public DutchPayIntersection(Member participant, DutchPay dutchPay) {

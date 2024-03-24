@@ -73,13 +73,13 @@ public class SharingService {
         return new SharingResponseDto(sharingRepository.findById(postId), commentResponseDtoList, checkMine);
     }
 
-    public void postSharing(SharingRequestDto sharingRequestDto, MultipartFile postImage) throws IOException {
+    public void postSharing(SharingRequestDto sharingRequestDto) throws IOException {
         Member currentMember = loadCurrentMember();
 
         Sharing newSharing = new Sharing(sharingRequestDto, currentMember);
         //newSharing.setImage(s3Uploader.upload(postImage, "sharing"));
 
-        currentMember.postSharing(newSharing);
+        //currentMember.postSharing(newSharing);
         sharingRepository.save(newSharing);
     }
 
@@ -99,12 +99,12 @@ public class SharingService {
         Optional<LikedSharing> existsLike = likeRepository.findByPostIdAndUserId(currentSharing, currentMember);
 
         if(existsLike.isPresent()){
-            currentMember.getLikedSharings().remove(existsLike.get());
+            //currentMember.getLikedSharings().remove(existsLike.get());
             return likeRepository.delete(existsLike.get());
         }
 
         LikedSharing newLikeSharing = new LikedSharing(currentMember, currentSharing);
-        currentMember.pushLikeSharing(newLikeSharing);
+        //currentMember.pushLikeSharing(newLikeSharing);
         return likeRepository.save(newLikeSharing);
     }
 

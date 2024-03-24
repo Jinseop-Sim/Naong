@@ -1,6 +1,7 @@
 package bera31.Project.domain.dto.responsedto.groupbuying;
 
 import bera31.Project.domain.dto.responsedto.CommentResponseDto;
+import bera31.Project.domain.page.Contents;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
 import lombok.Getter;
 
@@ -29,25 +30,25 @@ public class GroupBuyingResponseDto {
     int currentMember;
     List<CommentResponseDto> commentList;
 
-    public GroupBuyingResponseDto(GroupBuying groupBuying, List<CommentResponseDto> commentList, boolean checkMine) {
-        this.id = groupBuying.getId();
-        this.profileImage = groupBuying.getUser().getProfileImage();
-        this.title = groupBuying.getTitle();
-        this.userId = groupBuying.getUser().getId();
-        this.nickName = groupBuying.getUser().getNickname();
-        this.category = groupBuying.getCategory();
-        this.postImage = groupBuying.getImage();
-        this.product = groupBuying.getProduct();
-        this.price = groupBuying.getCost();
-        this.deadLine = groupBuying.getDeadLine();
-        this.content = groupBuying.getContent();
-        this.link = groupBuying.getLink();
-        this.gu = groupBuying.getGu();
-        this.dong = groupBuying.getDong();
-        this.currentMember = groupBuying.getMemberList().size();
-        this.limitMember = groupBuying.getLimitMember();
+    public GroupBuyingResponseDto(Contents contents, List<CommentResponseDto> commentList, boolean checkMine) {
+        this.id = contents.getId();
+        this.profileImage = contents.getUser().getProfileImage();
+        this.title = contents.getTitle();
+        this.userId = contents.getUser().getId();
+        this.nickName = contents.getUser().getNickname();
+        this.category = contents.getCategory();
+        this.postImage = contents.getImage();
+        this.product = contents.getProduct();
+        this.price = contents.getPrice();
+        this.deadLine = contents.getDeadLine();
+        this.content = contents.getContent();
+        this.link = contents.getLink();
+        this.gu = contents.getGu();
+        this.dong = contents.getDong();
+        this.currentMember = contents.getMemberList().size();
+        this.limitMember = contents.getMemberLimit();
         this.commentList = commentList;
-        this.postTime = groupBuying.getPostTime();
+        this.postTime = contents.getPostTime();
         this.checkMine = checkMine;
     }
 }

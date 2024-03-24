@@ -39,7 +39,7 @@ public class MyPageController {
         return new ResponseEntity<>(myPageService.showMyPage(), HttpStatus.OK);
     }
 
-    @Operation(summary = "내가 쓴 공동 구매 API입니다.")
+    /*@Operation(summary = "내가 쓴 공동 구매 API입니다.")
     @GetMapping("/myGroupBuying")
     public ResponseEntity<List<GroupBuyingListResponseDto>> showMyGroupBuying() {
         return new ResponseEntity<>(myPageService.showMyGroupBuying(), HttpStatus.OK);
@@ -73,5 +73,5 @@ public class MyPageController {
     @GetMapping("/favoriteSharing")
     public ResponseEntity<List<SharingListResponseDto>> showFavoriteSharing() {
         return new ResponseEntity<>(myPageService.showFavoriteSharing(), HttpStatus.OK);
-    }
+    }*/
 }

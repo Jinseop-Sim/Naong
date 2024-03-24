@@ -53,7 +53,7 @@ public class DutchPayService {
         Member currentMember = memberRepository.findById(1);
         DutchPay dutchPay = new DutchPay(dutchPayRequestDto, currentMember);
 
-        currentMember.postDutchPay(dutchPay);
+        //currentMember.postDutchPay(dutchPay);
 
         return dutchPayRepository.save(dutchPay);
     }
@@ -66,10 +66,10 @@ public class DutchPayService {
             throw new AlreadyFullException(ErrorResponse.ALREADY_FULL);
 
         DutchPayIntersection dutchPayIntersection = new DutchPayIntersection(currentMember, currentPost);
-        currentMember.participantDutchPay(dutchPayIntersection);
+        //currentMember.participantDutchPay(dutchPayIntersection);
         currentPost.addParticipantMember(dutchPayIntersection);
 
-        intersectionRepository.save(dutchPayIntersection);
+        //intersectionRepository.save(dutchPayIntersection);
     }
 
     public void deleteDutchPay(Long id) {

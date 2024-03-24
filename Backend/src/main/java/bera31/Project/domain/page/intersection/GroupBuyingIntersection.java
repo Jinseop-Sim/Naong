@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 @NoArgsConstructor
 @Getter
 public class GroupBuyingIntersection {
@@ -16,11 +16,11 @@ public class GroupBuyingIntersection {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "PARTICIPANT_ID")
+    //@ManyToOne
+    //@JoinColumn(name = "PARTICIPANT_ID")
     private Member participant;
-    @ManyToOne
-    @JoinColumn(name = "CONTENTS_ID")
+    //@ManyToOne
+    //@JoinColumn(name = "CONTENTS_ID")
     private GroupBuying groupBuying;
 
     public GroupBuyingIntersection(Member participant, GroupBuying groupBuying) {

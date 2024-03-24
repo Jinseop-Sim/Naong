@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 @Getter
 @NoArgsConstructor
 public class LikedSharing {
@@ -16,11 +16,11 @@ public class LikedSharing {
     @GeneratedValue
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "MEMBER_ID")
+    //@ManyToOne
+    //@JoinColumn(name = "MEMBER_ID")
     private Member member;
-    @ManyToOne
-    @JoinColumn(name = "CONTENTS_ID")
+    //@ManyToOne
+    //@JoinColumn(name = "CONTENTS_ID")
     private Sharing sharing;
 
     public LikedSharing(Member member, Sharing sharing) {
