@@ -1,4 +1,5 @@
 # <p align="center"> Project Naong! : Backend Repository</p>
+- 리팩토링 진행 중입니다. (2024.03.18 ~ )
 
 <div align ="center">
   <img src = "https://github.com/Jinseop-Sim/Naong/assets/71700079/aa6c47cd-284a-434d-9d1e-aded7434fb76">
