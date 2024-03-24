@@ -27,17 +27,26 @@
 |심진섭|이준희|조예봄|이지수|김태영|
 |:-:|:-:|:-:|:-:|:-:|
 |<img src="https://avatars.githubusercontent.com/u/71700079?s=400&u=9e9338f1a22b811003f826b00c9b797a01aea381&v=4" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/80378041?v=4" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/71700079?s=400&u=39746e5ac607c719261bdd5a8fc0108a290ba975&v=4" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/101401447?v=4" width="100" height="100">|<img src="https://avatars.githubusercontent.com/u/100909703?v=4" width="100" height="100">|
-|BE|BE|Design|FE|FE|
+|Backend|Backend|Design|Frontend|Frontend|
 |[Github](https://github.com/Jinseop-Sim)|[Github](https://github.com/Jun2-Lee)|-|[Github](https://github.com/dlwltn0430)|[Github](https://github.com/taeyomi)|
 
 </div>
    
 ## Architecture
-![server architecture drawio](https://github.com/Jinseop-Sim/Naong/assets/71700079/e2ced61a-5b42-4326-8911-afc8db759936)  
+![서버아키텍처 drawio](https://github.com/Jinseop-Sim/Naong/assets/71700079/d3a8b631-70fa-4440-83e1-4cf1fd2c2daf)  
 - Java Springboot
+  - 안정성이 검증된, 강력한 프레임워크인 Springboot를 채택하였습니다.
+- Spring Data JPA
 - Maria DB (RDS)
+- Redis
+  - Refresh Token의 저장을 위해 사용되었습니다.
+  - DB에 저장하지 않아 Token의 탈취 위험을 줄이고 DB 조회 빈도를 줄일 수 있습니다.
+  - Access Token의 재발급에 사용됩니다.
 - AWS EC2
+  - EC2 환경에 백엔드 서버를 배포하였습니다.
 - AWS S3
+  - S3 Bucket에 프론트엔드를 배포하여 외부에서 접근할 수 있도록 했습니다.
+  - 프로필 사진, 게시글 첨부 사진 등 이미지 관리에도 사용됩니다.
 
 ## Responsibility
 - 회원가입 및 로그인 인증 구현
