@@ -30,12 +30,6 @@
 |[Github](https://github.com/Jinseop-Sim)|[Github](https://github.com/Jun2-Lee)|-|[Github](https://github.com/dlwltn0430)|[Github](https://github.com/taeyomi)|
 
 </div>
-
-## Git Convention
-- ```Feat : XXX (00%)``` : 개발한 기능을 Commit 할 때 사용합니다.
-   - 진행률은 선택사항입니다.
-- ```Fix : XXX (00%)``` : 기능이나 타 요소에 대한 수정이 진행되었을 때 사용합니다.
-   - 진행률은 선택사항입니다.
    
 ## Architecture
 - Java Springboot
@@ -54,5 +48,10 @@
 - 일정 기능 구현
 - 쪽지 기능 구현
   - WebSocket이 아닌, 단순 REST API 형태의 쪽지 구현
-
-## Wireframe
+ 
+## Git Convention
+- ```Feat : XXX``` : 개발한 기능을 Commit 할 때 사용합니다.
+- ```Fix : XXX``` : 기능이나 타 요소에 대한 수정이 진행되었을 때 사용합니다.
+- ```Refactor : ``` : 기존 코드를 리팩토링했을 때 사용합니다.
+- ```Docs : XXX``` : 문서에 대한 수정이 발생했을 때 사용합니다.
+- ```Delete : XXX``` : 문서, 파일 등을 삭제했을 때 사용합니다.
