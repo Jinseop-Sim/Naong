@@ -19,7 +19,7 @@ public class ContentsRepository {
         return contents.getId();
     }
     public Long delete(Contents contents) {
-        em.persist(contents);
+        em.remove(contents);
         return contents.getId();
     }
 

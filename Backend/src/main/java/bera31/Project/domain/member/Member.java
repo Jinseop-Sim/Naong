@@ -1,14 +1,13 @@
 package bera31.Project.domain.member;
 
+import bera31.Project.domain.dto.requestdto.SignUpDto;
 import bera31.Project.domain.page.Contents;
 import bera31.Project.domain.page.intersection.*;
 import bera31.Project.domain.schedule.Schedule;
-import bera31.Project.domain.page.dutchpay.DutchPay;
-import bera31.Project.domain.page.groupbuying.GroupBuying;
-import bera31.Project.domain.page.sharing.Sharing;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,8 +22,15 @@ public class Member {
     @GeneratedValue
     @Column(name = "MEMBER_ID")
     private Long id;
+    @NotBlank
+    @Pattern(regexp = "^[A-Za-z0-9._]+@[A-Za-z]+.[A-za-z]$")
     private String email;
+    @NotNull
     private String nickname;
+    @NotNull
+    @Size(min = 8, max = 12, message = "8글자 이상, 12글자 이하가 되어야 합니다.")
+    @Pattern(regexp = "(?=.*[0-9])(?=.*[a-zA-Z])(?=.*\\\\W)(?=\\\\S+$)",
+            message = "숫자, 영문 대소문자, 특수문자가 반드시 조합되어야 합니다.")
     private String password;
     private String profileImage;
     @Enumerated(EnumType.STRING)
@@ -47,14 +53,18 @@ public class Member {
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Schedule> memoList = new ArrayList<>();
 
-    public Member(String email, String password, String nickname, String dong, String gu) {
-        this.email = email;
-        this.password = password;
-        this.nickname = nickname;
-        this.dong = dong;
-        this.gu = gu;
+    private Member(SignUpDto signUpDto){
+        this.email = signUpDto.getEmail();
+        this.password = signUpDto.getPassword();
+        this.nickname = signUpDto.getNickname();
+        this.gu = signUpDto.getGu();
+        this.dong = signUpDto.getDong();
         this.authority = Authority.ROLE_USER;
         this.provider = Provider.NAONG;
+    }
+
+    public static Member toMember(SignUpDto signUpDto){
+        return new Member(signUpDto);
     }
 
     public void postContents(Contents contents) {this.contentsList.add(contents); }

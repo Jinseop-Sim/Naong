@@ -1,5 +1,6 @@
 package bera31.Project.domain.dto.responsedto.dutchpay;
 
+import bera31.Project.domain.dto.responsedto.contents.ContentsListResponseDto;
 import bera31.Project.domain.page.dutchpay.DutchPay;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -23,15 +24,15 @@ public class DutchPayListResponseDto {
     LocalDateTime deadLine;
     LocalDateTime postTime;
 
-    public DutchPayListResponseDto(DutchPay dutchPay) {
-        this.id = dutchPay.getId();
-        this.store = dutchPay.getStore();
-        this.category = dutchPay.getCategory();
-        this.address = dutchPay.getAddress();
-        this.deliveryCost = dutchPay.getDeliveryCost();
-        this.limitMember = dutchPay.getLimitMember();
-        this.currentMember = dutchPay.getMemberList().size();
-        this.deadLine = dutchPay.getDeadLine();
-        this.postTime = dutchPay.getPostTime();
+    public DutchPayListResponseDto(ContentsListResponseDto contentsListResponseDto) {
+        this.id = contentsListResponseDto.getId();
+        this.store = contentsListResponseDto.getStore();
+        this.category = contentsListResponseDto.getCategory();
+        this.address = contentsListResponseDto.getAddress();
+        this.deliveryCost = contentsListResponseDto.getDeliveryCost();
+        this.limitMember = contentsListResponseDto.getLimit();
+        this.currentMember = contentsListResponseDto.getCurrentMember();
+        this.deadLine = contentsListResponseDto.getDeadLine();
+        this.postTime = contentsListResponseDto.getPostTime();
     }
 }

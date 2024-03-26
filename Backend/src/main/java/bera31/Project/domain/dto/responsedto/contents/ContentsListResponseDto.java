@@ -1,8 +1,8 @@
-package bera31.Project.domain.dto.responsedto;
+package bera31.Project.domain.dto.responsedto.contents;
 
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.Contents;
-import lombok.AllArgsConstructor;
+import bera31.Project.domain.page.ContentsType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -42,7 +42,23 @@ public class ContentsListResponseDto {
         this.currParticipant = contents.getMemberList().size();
         this.isFinish = contents.isFinish();
         this.store = contents.getStore();
-        this.address = contents.getDetailAddress();
+        this.address = contents.getGu() + " " + contents.getDong();
         this.deliveryCost = contents.getDeliveryCost();
     }
+
+    @Getter
+    public static class SimpleContentsResponseDto {
+        Long id;
+        String title;
+        LocalDateTime postTime;
+        ContentsType contentsType;
+
+        public SimpleContentsResponseDto(Contents contents){
+            this.id = contents.getId();
+            this.title = contents.getTitle();
+            this.postTime = contents.getPostTime();
+            this.contentsType = contents.getContentsType();
+        }
+    }
 }
+

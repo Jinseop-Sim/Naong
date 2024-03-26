@@ -1,14 +1,10 @@
 package bera31.Project.service.page;
 
 import bera31.Project.domain.dto.responsedto.*;
-import bera31.Project.domain.dto.responsedto.dutchpay.DutchPayListResponseDto;
-import bera31.Project.domain.dto.responsedto.groupbuying.GroupBuyingListResponseDto;
-import bera31.Project.domain.dto.responsedto.groupbuying.SimpleContentsResponseDto;
-import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
+import bera31.Project.domain.dto.responsedto.contents.ContentsListResponseDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.intersection.*;
 import bera31.Project.repository.MemberRepository;
-import bera31.Project.repository.page.IntersectionRepository;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -38,24 +34,24 @@ public class MyPageService {
                 .map(TodayScheduleResponseDto::new).collect(Collectors.toList());
     }
 
-    public List<SimpleContentsResponseDto> loadMyContents(Member findedMember) {
+    public List<ContentsListResponseDto.SimpleContentsResponseDto> loadMyContents(Member findedMember) {
         return findedMember.getContentsList().stream()
-                .map(SimpleContentsResponseDto::new)
+                .map(ContentsListResponseDto.SimpleContentsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
 
-    public List<SimpleContentsResponseDto> loadParticipantingGroupBuying(Member findedMember) {
+    public List<ContentsListResponseDto.SimpleContentsResponseDto> loadParticipantingGroupBuying(Member findedMember) {
         return findedMember.getParticipantingContents().stream()
                 .map(ContentsParticipation::getContents)
-                .map(SimpleContentsResponseDto::new)
+                .map(ContentsListResponseDto.SimpleContentsResponseDto::new)
                 .collect(Collectors.toList());
     }
 
-    public List<SimpleContentsResponseDto> loadFavoriteGroupBuying(Member findedMember) {
+    public List<ContentsListResponseDto.SimpleContentsResponseDto> loadFavoriteGroupBuying(Member findedMember) {
         return findedMember.getLikedContents().stream()
                 .map(LikedContents::getContents)
-                .map(SimpleContentsResponseDto::new)
+                .map(ContentsListResponseDto.SimpleContentsResponseDto::new)
                 .collect(Collectors.toList());
     }
 

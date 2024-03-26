@@ -42,8 +42,7 @@ public class AuthService {
         if (checkEmailDuplication(signUpDto))
             throw new EmailDuplicateException(ErrorResponse.EMAIL_DUPLICATE);
 
-        Member member = new Member(signUpDto.getEmail(), passwordEncoder.encode(signUpDto.getPassword()),
-                signUpDto.getNickname(), signUpDto.getDong(), signUpDto.getGu());
+        Member member = Member.toMember(signUpDto);
 
         /*if (!profileImage.isEmpty())
             member.setProfileImage(s3Uploader.upload(profileImage, "profileImage"));*/

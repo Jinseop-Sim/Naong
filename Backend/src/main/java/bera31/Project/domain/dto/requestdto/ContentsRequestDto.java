@@ -30,7 +30,6 @@ public class ContentsRequestDto {
 
     // DutchPay
     String store;
-    String address;
     String detailAddress;
     int deliveryCost;
 }

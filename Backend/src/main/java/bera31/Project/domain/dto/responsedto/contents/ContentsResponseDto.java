@@ -1,5 +1,6 @@
-package bera31.Project.domain.dto.responsedto;
+package bera31.Project.domain.dto.responsedto.contents;
 
+import bera31.Project.domain.dto.responsedto.CommentResponseDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.Contents;
 import lombok.Getter;
@@ -12,6 +13,7 @@ public class ContentsResponseDto {
     private Long id;
     private String title;
     private String profileImage;
+    private String store;
     private Long userId;
     private String nickName;
     private String postImage;

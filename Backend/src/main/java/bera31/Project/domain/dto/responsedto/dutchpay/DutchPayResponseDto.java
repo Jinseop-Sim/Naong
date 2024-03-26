@@ -1,5 +1,6 @@
 package bera31.Project.domain.dto.responsedto.dutchpay;
 
+import bera31.Project.domain.dto.responsedto.contents.ContentsResponseDto;
 import bera31.Project.domain.page.dutchpay.DutchPay;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,21 +26,21 @@ public class DutchPayResponseDto {
     int currentMember;
     boolean checkMine;
 
-    public DutchPayResponseDto(DutchPay dutchPay, boolean checkMine) {
-        this.id = dutchPay.getId();
-        this.userId = dutchPay.getUser().getId();
-        this.nickname = dutchPay.getUser().getNickname();
-        this.profileImage = dutchPay.getUser().getProfileImage();
-        this.store = dutchPay.getStore();
-        this.category = dutchPay.getCategory();
-        this.deliveryCost = dutchPay.getDeliveryCost();
-        this.limitMember = dutchPay.getLimitMember();
-        this.currentMember = dutchPay.getMemberList().size();
-        this.deadLine = dutchPay.getDeadLine();
-        this.address = dutchPay.getAddress();
-        this.detailAddress = dutchPay.getDetailAddress();
-        this.content = dutchPay.getContent();
-        this.postTime = dutchPay.getPostTime();
-        this.checkMine = checkMine;
+    public DutchPayResponseDto(ContentsResponseDto contentsResponseDto) {
+        this.id = contentsResponseDto.getId();
+        this.userId = contentsResponseDto.getUserId();
+        this.nickname = contentsResponseDto.getNickName();
+        this.profileImage = contentsResponseDto.getProfileImage();
+        this.store = contentsResponseDto.getStore();
+        this.category = contentsResponseDto.getCategory();
+        this.deliveryCost = contentsResponseDto.getDeliveryCost();
+        this.limitMember = contentsResponseDto.getLimitMember();
+        this.currentMember = contentsResponseDto.getCurrentMember();
+        this.deadLine = contentsResponseDto.getDeadLine();
+        this.address = contentsResponseDto.getGu() + " " + contentsResponseDto.getDong();
+        this.detailAddress = contentsResponseDto.getDetailAddress();
+        this.content = contentsResponseDto.getContent();
+        this.postTime = contentsResponseDto.getPostTime();
+        this.checkMine = contentsResponseDto.isCheckMine();
     }
 }

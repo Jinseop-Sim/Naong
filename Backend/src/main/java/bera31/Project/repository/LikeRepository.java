@@ -2,11 +2,7 @@ package bera31.Project.repository;
 
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.Contents;
-import bera31.Project.domain.page.groupbuying.GroupBuying;
 import bera31.Project.domain.page.intersection.LikedContents;
-import bera31.Project.domain.page.intersection.LikedGroupBuying;
-import bera31.Project.domain.page.intersection.LikedSharing;
-import bera31.Project.domain.page.sharing.Sharing;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

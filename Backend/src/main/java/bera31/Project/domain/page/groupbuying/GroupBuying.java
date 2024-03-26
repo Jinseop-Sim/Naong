@@ -3,16 +3,12 @@ package bera31.Project.domain.page.groupbuying;
 import bera31.Project.domain.dto.requestdto.GroupBuyingRequestDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.Contents;
-import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
-import bera31.Project.domain.page.intersection.LikedGroupBuying;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
 //@Entity
 @AllArgsConstructor
@@ -37,10 +33,6 @@ public class GroupBuying extends Contents {
 
     public void setImage(String image) {
         this.image = image;
-    }
-
-    public void addMember(GroupBuyingIntersection groupBuyingIntersection) {
-        //memberList.add(groupBuyingIntersection);
     }
     public void expirePost() {
         this.isFinish = true;

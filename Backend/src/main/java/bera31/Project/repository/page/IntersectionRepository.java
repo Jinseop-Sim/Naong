@@ -1,10 +1,7 @@
 package bera31.Project.repository.page;
 
 import bera31.Project.domain.member.Member;
-import bera31.Project.domain.page.groupbuying.GroupBuying;
 import bera31.Project.domain.page.intersection.ContentsParticipation;
-import bera31.Project.domain.page.intersection.DutchPayIntersection;
-import bera31.Project.domain.page.intersection.GroupBuyingIntersection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 

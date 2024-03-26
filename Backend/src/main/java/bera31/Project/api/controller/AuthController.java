@@ -9,8 +9,10 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,7 +23,7 @@ public class AuthController {
     @Operation(summary = "회원가입 요청 API입니다.",
             description = "Multipart 형식으로 사진과 signUpDto를 넘겨주시면 됩니다.")
     @PostMapping("/signup")
-    public ResponseEntity<Long> signUp(@RequestPart SignUpDto signUpDto) throws Exception {
+    public ResponseEntity<Long> signUp(@RequestBody @Valid SignUpDto signUpDto) throws Exception {
         return new ResponseEntity<>(authService.signUp(signUpDto), HttpStatus.OK);
     }
 

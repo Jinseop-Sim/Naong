@@ -1,6 +1,7 @@
 package bera31.Project.domain.dto.responsedto.groupbuying;
 
 import bera31.Project.domain.Address;
+import bera31.Project.domain.dto.responsedto.contents.ContentsListResponseDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.Contents;
 import bera31.Project.domain.page.groupbuying.GroupBuying;
@@ -17,30 +18,33 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GroupBuyingListResponseDto {
-    Long id;
-    String image;
-    String nickname;
-    String title;
-    String category;
-    String dong;
-    LocalDateTime postTime;
-    LocalDateTime deadLine;
-    int limit;
-    int currParticipant;
-    boolean isFinish;
+    private Long id;
+    private String image;
+    private String nickname;
+    private String title;
+    private String category;
+    private String dong;
+    private LocalDateTime postTime;
+    private LocalDateTime deadLine;
+    private int limit;
+    private int currParticipant;
+    private boolean isFinish;
 
-    public GroupBuyingListResponseDto(Contents contents) {
-        Member author = contents.getUser();
-        this.id = contents.getId();
-        this.image = contents.getImage();
-        this.nickname = author.getNickname();
-        this.title = contents.getTitle();
-        this.category = contents.getCategory();
-        this.dong = contents.getDong();
-        this.postTime = contents.getPostTime();
-        this.deadLine = contents.getDeadLine();
-        this.limit = contents.getMemberLimit();
-        this.currParticipant = contents.getMemberList().size();
-        this.isFinish = contents.isFinish();
+    private GroupBuyingListResponseDto(ContentsListResponseDto contentsListResponseDto) {
+        this.id = contentsListResponseDto.getId();
+        this.image = contentsListResponseDto.getImage();
+        this.nickname = contentsListResponseDto.getNickname();
+        this.title = contentsListResponseDto.getTitle();
+        this.category = contentsListResponseDto.getCategory();
+        this.dong = contentsListResponseDto.getDong();
+        this.postTime = contentsListResponseDto.getPostTime();
+        this.deadLine = contentsListResponseDto.getDeadLine();
+        this.limit = contentsListResponseDto.getLimit();
+        this.currParticipant = contentsListResponseDto.getCurrParticipant();
+        this.isFinish = contentsListResponseDto.isFinish();
+    }
+
+    public static GroupBuyingListResponseDto fromContentsListResponse(ContentsListResponseDto contentsListResponseDto){
+        return new GroupBuyingListResponseDto(contentsListResponseDto);
     }
 }

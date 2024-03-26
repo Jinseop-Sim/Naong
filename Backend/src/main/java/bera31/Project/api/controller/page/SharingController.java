@@ -2,21 +2,16 @@ package bera31.Project.api.controller.page;
 
 import bera31.Project.domain.dto.requestdto.CommentRequestDto;
 import bera31.Project.domain.dto.requestdto.ContentsRequestDto;
-import bera31.Project.domain.dto.requestdto.SharingRequestDto;
-import bera31.Project.domain.dto.responsedto.ContentsListResponseDto;
-import bera31.Project.domain.dto.responsedto.ContentsResponseDto;
-import bera31.Project.domain.dto.responsedto.sharing.SharingListResponseDto;
-import bera31.Project.domain.dto.responsedto.sharing.SharingResponseDto;
+import bera31.Project.domain.dto.responsedto.contents.ContentsListResponseDto;
+import bera31.Project.domain.dto.responsedto.contents.ContentsResponseDto;
 import bera31.Project.domain.page.ContentsType;
 import bera31.Project.service.CommentService;
 import bera31.Project.service.page.ContentsService;
-import bera31.Project.service.page.SharingService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;

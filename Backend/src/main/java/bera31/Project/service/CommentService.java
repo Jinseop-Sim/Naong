@@ -2,23 +2,15 @@ package bera31.Project.service;
 
 import bera31.Project.domain.comment.Comment;
 import bera31.Project.domain.dto.requestdto.CommentRequestDto;
-import bera31.Project.domain.dto.responsedto.CommentResponseDto;
 import bera31.Project.domain.member.Member;
 import bera31.Project.domain.page.Contents;
-import bera31.Project.domain.page.groupbuying.GroupBuying;
-import bera31.Project.domain.page.sharing.Sharing;
 import bera31.Project.repository.CommentRepository;
 import bera31.Project.repository.MemberRepository;
 import bera31.Project.repository.page.ContentsRepository;
-import bera31.Project.repository.page.GroupBuyingRepository;
-import bera31.Project.repository.page.SharingRepository;
 import bera31.Project.utility.SecurityUtility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 @Transactional
